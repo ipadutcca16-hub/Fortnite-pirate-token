@@ -1,0 +1,1542 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fortnite Pirate Token Tracker | Treasure Hunters</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,700;1,900&family=Luckiest+Guy&family=Chango&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #070d18;
+      --bg-surface: #0f1c32;
+      --bg-card: #152642;
+      --bg-card-hover: #1c3358;
+      --gold-primary: #f59e0b;
+      --gold-light: #fef08a;
+      --gold-glow: #fbbf24;
+      --gold-dark: #b45309;
+      --gold-border: #d97706;
+      --cyan-accent: #00f0ff;
+      --cyan-dark: #0284c7;
+      --cyan-glow: rgba(0, 240, 255, 0.4);
+      --purple-accent: #a855f7;
+      --crimson-accent: #ef4444;
+      --crimson-dark: #991b1b;
+      --emerald-accent: #10b981;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --border-dark: #223758;
+      --font-game: 'Luckiest Guy', 'Kanit', cursive, sans-serif;
+      --font-body: 'Kanit', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-body);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(2, 132, 199, 0.22) 0%, transparent 65%),
+        radial-gradient(circle at 10% 90%, rgba(245, 158, 11, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(168, 85, 247, 0.1) 0%, transparent 45%),
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 24px 16px 64px 16px;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 680px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Fortnite Header Badge & Typography */
+    .header-banner {
+      background: linear-gradient(135deg, #0b1527 0%, #162a4a 100%);
+      border: 2px solid var(--border-dark);
+      border-top: 4px solid var(--gold-primary);
+      border-radius: 20px;
+      padding: 24px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .header-banner::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .fortnite-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #000;
+      color: var(--cyan-accent);
+      padding: 4px 14px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      border: 1px solid var(--cyan-dark);
+      box-shadow: 0 0 10px var(--cyan-glow);
+      transform: skewX(-8deg);
+      margin-bottom: 8px;
+    }
+
+    .fortnite-pill span {
+      transform: skewX(8deg);
+    }
+
+    h1.game-title {
+      font-family: var(--font-game);
+      font-size: clamp(1.8rem, 5vw, 2.4rem);
+      letter-spacing: 1px;
+      color: #fff;
+      text-transform: uppercase;
+      line-height: 1.15;
+      margin-bottom: 6px;
+      text-shadow: 
+        0 3px 0 var(--gold-dark),
+        0 6px 1px rgba(0, 0, 0, 0.9),
+        0 0 25px rgba(245, 158, 11, 0.5);
+      background: linear-gradient(180deg, #ffffff 25%, #fef08a 60%, #f59e0b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      font-weight: 400;
+    }
+
+    .header-controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .btn-toggle-sound {
+      background: rgba(15, 28, 50, 0.8);
+      border: 1px solid var(--border-dark);
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-toggle-sound:hover {
+      color: #fff;
+      border-color: var(--gold-primary);
+    }
+
+    .btn-toggle-sound.active {
+      color: var(--gold-light);
+      border-color: var(--gold-primary);
+      background: rgba(245, 158, 11, 0.15);
+    }
+
+    /* Core Hero Result Display */
+    .hero-probability-card {
+      background: linear-gradient(180deg, #13243f 0%, #0c172a 100%);
+      border: 2px solid var(--gold-border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 
+        0 15px 35px rgba(0, 0, 0, 0.6),
+        0 0 20px rgba(245, 158, 11, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      text-align: center;
+      position: relative;
+    }
+
+    .ribbon-tag {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%) skewX(-8deg);
+      background: linear-gradient(90deg, #b45309, #f59e0b, #b45309);
+      color: #000;
+      font-weight: 900;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      padding: 4px 18px;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .ribbon-tag span {
+      display: inline-block;
+      transform: skewX(8deg);
+    }
+
+    .prob-number-container {
+      margin-top: 10px;
+      margin-bottom: 8px;
+    }
+
+    .prob-number {
+      font-family: var(--font-game);
+      font-size: clamp(2.8rem, 8vw, 4.2rem);
+      line-height: 1;
+      letter-spacing: 1px;
+      color: #fff;
+      text-shadow: 
+        0 4px 0 var(--gold-dark),
+        0 8px 12px rgba(0, 0, 0, 0.8),
+        0 0 35px rgba(251, 191, 36, 0.5);
+    }
+
+    .prob-status {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--cyan-accent);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    /* Stylized Battle-pass style Progress Bar */
+    .bar-frame {
+      background: #09111e;
+      border: 2px solid var(--border-dark);
+      border-radius: 999px;
+      height: 18px;
+      padding: 2px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.8);
+      margin: 12px 0 16px 0;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #0284c7 0%, #00f0ff 40%, #fbbf24 85%, #f59e0b 100%);
+      width: 0%;
+      transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 0 12px var(--cyan-accent);
+      position: relative;
+    }
+
+    .bar-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, transparent 60%);
+      border-radius: 999px;
+    }
+
+    .milestones-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .milestone-item {
+      background: rgba(15, 28, 50, 0.7);
+      border: 1px solid var(--border-dark);
+      border-radius: 14px;
+      padding: 12px;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .milestone-item.halfway {
+      border-left: 4px solid var(--cyan-accent);
+    }
+
+    .milestone-item.almost {
+      border-left: 4px solid var(--gold-primary);
+    }
+
+    .milestone-item .title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 4px;
+    }
+
+    .milestone-item .number {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .milestone-item .desc {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin-top: 2px;
+    }
+
+    /* Live Chest Counter Module */
+    .live-counter-section {
+      background: var(--bg-surface);
+      border: 2px solid var(--border-dark);
+      border-radius: 20px;
+      padding: 22px 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .section-title {
+      font-family: var(--font-game);
+      font-size: 1.25rem;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    .mode-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      background: #09111e;
+      padding: 6px;
+      border-radius: 14px;
+      border: 1px solid var(--border-dark);
+      margin-bottom: 18px;
+    }
+
+    .mode-tab {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 10px 6px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+    }
+
+    .mode-tab span.rate {
+      font-size: 0.7rem;
+      opacity: 0.75;
+      font-weight: 500;
+    }
+
+    .mode-tab:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .mode-tab.active-normal {
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.4);
+    }
+
+    .mode-tab.active-15 {
+      background: linear-gradient(135deg, #d97706, #b45309);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(217, 119, 6, 0.4);
+    }
+
+    .mode-tab.active-20 {
+      background: linear-gradient(135deg, #ef4444, #b91c1c);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(239, 68, 68, 0.5);
+    }
+
+    /* Giant +1 Tactile Fortnite Button */
+    .tap-area {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 10px 0 16px 0;
+    }
+
+    .btn-giant-add {
+      width: 100%;
+      height: 96px;
+      border-radius: 20px;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      font-family: var(--font-game);
+      font-size: 1.8rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #1f1200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      position: relative;
+      background: linear-gradient(180deg, #fef08a 0%, #fbbf24 30%, #f59e0b 80%, #d97706 100%);
+      box-shadow: 
+        0 8px 0 #92400e,
+        0 14px 20px rgba(0, 0, 0, 0.6),
+        inset 0 2px 0 rgba(255, 255, 255, 0.6),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.2);
+      transition: transform 0.08s ease, box-shadow 0.08s ease;
+      user-select: none;
+    }
+
+    .btn-giant-add:active, .btn-giant-add.pressed {
+      transform: translateY(6px);
+      box-shadow: 
+        0 2px 0 #92400e,
+        0 6px 12px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    }
+
+    .btn-giant-add .chest-icon {
+      font-size: 2.2rem;
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
+      animation: chestBounce 2.5s infinite ease-in-out;
+    }
+
+    @keyframes chestBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px) scale(1.05); }
+    }
+
+    .btn-giant-add.ripple-fx::before {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 26px;
+      border: 3px solid var(--gold-glow);
+      opacity: 0;
+      animation: rippleAnim 0.35s ease-out;
+    }
+
+    @keyframes rippleAnim {
+      0% { opacity: 1; transform: scale(0.98); }
+      100% { opacity: 0; transform: scale(1.05); }
+    }
+
+    /* Floating +1 notification elements */
+    .floating-loot {
+      position: absolute;
+      color: #fff;
+      font-family: var(--font-game);
+      font-size: 1.8rem;
+      pointer-events: none;
+      animation: lootFloat 0.75s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
+      text-shadow: 0 2px 0 #000, 0 0 12px var(--gold-glow);
+      z-index: 50;
+    }
+
+    @keyframes lootFloat {
+      0% {
+        opacity: 0;
+        transform: translateY(0) scale(0.6);
+      }
+      30% {
+        opacity: 1;
+        transform: translateY(-20px) scale(1.2);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-65px) scale(0.9);
+      }
+    }
+
+    /* Quick Action Buttons and Undo Row */
+    .quick-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr) 1.2fr;
+      gap: 8px;
+    }
+
+    .btn-quick {
+      background: #0d1729;
+      border: 1px solid var(--border-dark);
+      border-bottom: 3px solid #060e1d;
+      color: var(--text-main);
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 10px 4px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.1s ease;
+      text-align: center;
+    }
+
+    .btn-quick:hover {
+      border-color: var(--cyan-dark);
+      color: var(--cyan-accent);
+      transform: translateY(-1px);
+    }
+
+    .btn-quick:active {
+      transform: translateY(2px);
+      border-bottom-width: 1px;
+    }
+
+    .btn-undo {
+      background: #2a1b1b;
+      border: 1px solid #7f1d1d;
+      border-bottom: 3px solid #450a0a;
+      color: #fca5a5;
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 10px 8px;
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: all 0.1s ease;
+    }
+
+    .btn-undo:hover:not(:disabled) {
+      background: #3b1e1e;
+      color: #fff;
+    }
+
+    .btn-undo:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      border-color: #332020;
+    }
+
+    .btn-undo:active:not(:disabled) {
+      transform: translateY(2px);
+      border-bottom-width: 1px;
+    }
+
+    /* Chest Details breakdown by Rate */
+    .tier-breakdown-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .tier-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-dark);
+      border-radius: 14px;
+      padding: 14px 10px;
+      text-align: center;
+      position: relative;
+    }
+
+    .tier-card.tier-active {
+      border-color: var(--gold-primary);
+      box-shadow: 0 0 10px rgba(245, 158, 11, 0.25);
+    }
+
+    .tier-name {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .tier-rate-badge {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-bottom: 6px;
+    }
+
+    .badge-normal { background: rgba(2, 132, 199, 0.2); color: #38bdf8; }
+    .badge-15 { background: rgba(217, 119, 6, 0.2); color: #fbbf24; }
+    .badge-20 { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+
+    .tier-input-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      margin-top: 4px;
+    }
+
+    .tier-count-input {
+      width: 100%;
+      background: #09111e;
+      border: 1px solid var(--border-dark);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 800;
+      text-align: center;
+      padding: 6px 2px;
+      outline: none;
+    }
+
+    .tier-count-input:focus {
+      border-color: var(--gold-primary);
+    }
+
+    /* Match History & Management */
+    .history-section {
+      background: var(--bg-surface);
+      border: 2px solid var(--border-dark);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    }
+
+    .history-controls {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn-action-primary {
+      background: linear-gradient(135deg, #10b981, #059669);
+      border: none;
+      border-bottom: 3px solid #065f46;
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 8px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.1s ease;
+    }
+
+    .btn-action-primary:hover {
+      filter: brightness(1.1);
+    }
+
+    .btn-action-primary:active {
+      transform: translateY(2px);
+      border-bottom-width: 1px;
+    }
+
+    .btn-action-ghost {
+      background: #09111e;
+      border: 1px solid var(--border-dark);
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.8rem;
+      padding: 8px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-action-ghost:hover {
+      color: #fff;
+      border-color: var(--text-muted);
+    }
+
+    .history-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 14px;
+      max-height: 260px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .history-list::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .history-list::-webkit-scrollbar-thumb {
+      background: var(--border-dark);
+      border-radius: 999px;
+    }
+
+    .history-item {
+      background: #09111e;
+      border: 1px solid var(--border-dark);
+      border-radius: 12px;
+      padding: 10px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .history-item-info strong {
+      color: var(--gold-light);
+      font-size: 0.95rem;
+    }
+
+    .history-item-info span {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    .history-pills {
+      display: flex;
+      gap: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+
+    .history-pill-val {
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: var(--bg-card);
+      color: var(--text-muted);
+    }
+
+    .btn-del-item {
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      cursor: pointer;
+      padding: 4px;
+      font-size: 1rem;
+      transition: color 0.2s;
+    }
+
+    .btn-del-item:hover {
+      color: var(--crimson-accent);
+    }
+
+    .empty-history {
+      text-align: center;
+      padding: 24px;
+      color: var(--text-dim);
+      font-size: 0.9rem;
+    }
+
+    /* Probability Math Accordion / Footer */
+    .math-info-card {
+      background: #0a1322;
+      border: 1px dashed var(--border-dark);
+      border-radius: 16px;
+      padding: 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .math-info-card summary {
+      cursor: pointer;
+      font-weight: 700;
+      color: var(--cyan-accent);
+      user-select: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .math-info-card p {
+      margin-top: 10px;
+    }
+
+    .formula-box {
+      background: #050a12;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-family: monospace;
+      color: var(--gold-light);
+      margin: 8px 0;
+      overflow-x: auto;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #111e33;
+      border: 1px solid var(--gold-primary);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+      pointer-events: none;
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 16px 10px 48px 10px;
+      }
+      .quick-bar {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      .btn-undo {
+        grid-column: span 4;
+      }
+      .milestones-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+
+    <!-- Fortnite Styled Header -->
+    <header class="header-banner">
+      <div class="fortnite-pill">
+        <span>⚔️ BATTLE ROYALE • EVENT TRACKER</span>
+      </div>
+      <h1 class="game-title">🏴‍☠️ PIRATE TOKEN FINDER</h1>
+      <p class="subtitle">คำนวณโอกาสสะสมเหรียญโจรสลัด & บันทึกกล่องแบบ Live Counter</p>
+      
+      <div class="header-controls">
+        <button id="soundToggleBtn" class="btn-toggle-sound active" onclick="toggleSound()">
+          <span id="soundIcon">🔊</span>
+          <span id="soundText">เปิดเสียงเกม</span>
+        </button>
+        <button class="btn-toggle-sound" onclick="resetCurrentSession()">
+          <span>🔄</span>
+          <span>รีเซ็ตรอบปัจจุบัน</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Hero Result Card: Overall Cumulative Probability -->
+    <section class="hero-probability-card">
+      <div class="ribbon-tag">
+        <span>🏆 TOTAL CUMULATIVE CHANCE</span>
+      </div>
+
+      <div class="prob-number-container">
+        <div class="prob-number" id="chanceDisplay">0.0000%</div>
+      </div>
+
+      <div class="prob-status" id="probSummary">
+        <span>📦 เปิดสะสมไปแล้ว: <strong>0 กล่อง</strong></span>
+      </div>
+
+      <div class="bar-frame">
+        <div class="bar-fill" id="progressFill" style="width: 0%;"></div>
+      </div>
+
+      <div class="milestones-grid">
+        <div class="milestone-item halfway">
+          <div class="title">🎯 โอกาส 50% (จุดวัดดวง)</div>
+          <div class="number" id="target50Display">-</div>
+          <div class="desc" id="target50Desc">เปิดเพิ่มอีกในเรตปัจจุบัน</div>
+        </div>
+        <div class="milestone-item almost">
+          <div class="title">👑 โอกาส 90% (เกือบการันตี)</div>
+          <div class="number" id="target90Display">-</div>
+          <div class="desc" id="target90Desc">เปิดเพิ่มอีกในเรตปัจจุบัน</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Live Counter Station -->
+    <section class="live-counter-section">
+      <div class="section-header">
+        <div class="section-title">
+          <span>⚡ LIVE CHEST COUNTER</span>
+        </div>
+        <span style="font-size: 0.8rem; color: var(--text-muted);">
+          กดปุ่มหรือกด Spacebar เพื่อบวกกล่อง
+        </span>
+      </div>
+
+      <!-- Mode Selector Tabs -->
+      <div class="mode-tabs">
+        <button class="mode-tab active-normal" id="tab-normal" onclick="selectRate('normal')">
+          <span>🏴‍☠️ ปกติ</span>
+          <span class="rate">1 : 137,500</span>
+        </button>
+        <button class="mode-tab" id="tab-15" onclick="selectRate('rate15')">
+          <span>⚡ Treasure 1.5x</span>
+          <span class="rate">1 : 91,667</span>
+        </button>
+        <button class="mode-tab" id="tab-20" onclick="selectRate('rate20')">
+          <span>🔥 Treasure 2.0x</span>
+          <span class="rate">1 : 68,750</span>
+        </button>
+      </div>
+
+      <!-- Massive Tap Button -->
+      <div class="tap-area">
+        <button class="btn-giant-add" id="giantBtn" onclick="handleChestClick(1)">
+          <span class="chest-icon">📦</span>
+          <span>เปิดกล่อง +1</span>
+        </button>
+      </div>
+
+      <!-- Quick Adjust + Undo Row -->
+      <div class="quick-bar">
+        <button class="btn-quick" onclick="handleChestClick(5)">+5</button>
+        <button class="btn-quick" onclick="handleChestClick(10)">+10</button>
+        <button class="btn-quick" onclick="handleChestClick(25)">+25</button>
+        <button class="btn-quick" onclick="handleChestClick(50)">+50</button>
+        <button class="btn-undo" id="undoBtn" onclick="undoLastAction()" disabled>
+          <span>↩️</span>
+          <span>Undo</span>
+        </button>
+      </div>
+
+      <!-- Breakdown of Counters (Per Rate Category) -->
+      <div class="tier-breakdown-grid">
+        <div class="tier-card" id="card-normal">
+          <div class="tier-name">กล่องเวลาปกติ</div>
+          <span class="tier-rate-badge badge-normal">เรต 1.0x</span>
+          <div class="tier-input-wrap">
+            <input type="number" min="0" class="tier-count-input" id="input-normal" value="0" oninput="handleManualInputChange('normal')">
+          </div>
+        </div>
+
+        <div class="tier-card" id="card-rate15">
+          <div class="tier-name">กล่องช่วง 1.5x</div>
+          <span class="tier-rate-badge badge-15">เรต 1.5x</span>
+          <div class="tier-input-wrap">
+            <input type="number" min="0" class="tier-count-input" id="input-rate15" value="0" oninput="handleManualInputChange('rate15')">
+          </div>
+        </div>
+
+        <div class="tier-card" id="card-rate20">
+          <div class="tier-name">กล่องช่วง 2.0x</div>
+          <span class="tier-rate-badge badge-20">เรต 2.0x</span>
+          <div class="tier-input-wrap">
+            <input type="number" min="0" class="tier-count-input" id="input-rate20" value="0" oninput="handleManualInputChange('rate20')">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Match History & Session Management -->
+    <section class="history-section">
+      <div class="section-header">
+        <div class="section-title">
+          <span>📜 ประวัติการเล่น & บันทึกแมตช์</span>
+        </div>
+        <div class="history-controls">
+          <button class="btn-action-primary" onclick="saveCurrentMatch()">
+            <span>💾 บันทึกแมตช์นี้</span>
+          </button>
+          <button class="btn-action-ghost" onclick="clearAllHistory()">
+            <span>🗑️ ล้างประวัติ</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="history-list" id="historyList">
+        <div class="empty-history">ยังไม่มีประวัติการบันทึกแมตช์ กด "+1" แล้วคลิก "บันทึกแมตช์นี้" ได้เลย!</div>
+      </div>
+    </section>
+
+    <!-- Math & Formula Explanation -->
+    <details class="math-info-card">
+      <summary>📐 หลักการคำนวณความน่าจะเป็นรวมแบบผสม (Mathematical Formula)</summary>
+      <p>
+        เมื่อเปิดกล่องข้ามหลายช่วงเวลาที่มีเรตต่างกัน โอกาสรวมที่จะได้ Pirate Token อย่างน้อย 1 ชิ้น คำนวณจากสูตร:
+      </p>
+      <div class="formula-box">
+        P(สะสม) = 1 - [ (1 - p₁)^(N₁) × (1 - p₁.₅)^(N₁.₅) × (1 - p₂)^(N₂) ]
+      </div>
+      <p>
+        • <strong>เวลาปกติ (1.0x):</strong> p₁ = 1 / 137,500<br>
+        • <strong>Treasure Hour 1.5x:</strong> p₁.₅ = 1 / 91,667 (หรือ 1.5 / 137,500)<br>
+        • <strong>Treasure Hour 2.0x:</strong> p₂ = 1 / 68,750 (หรือ 2.0 / 137,500)<br>
+        ระบบจะจำลองการเปิดจริงทุกกล่อง และบันทึกข้อมูลคงไว้ใน LocalStorage อัตโนมัติ ป้องกันข้อมูลหายเมื่อรีเฟรช
+      </p>
+    </details>
+
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">
+    <span id="toastIcon">✨</span>
+    <span id="toastMsg">บันทึกข้อมูลเรียบร้อย</span>
+  </div>
+
+  <script>
+    // Constants for Drop Rates
+    const RATES = {
+      normal: 137500,
+      rate15: 91666.66667,
+      rate20: 68750
+    };
+
+    const STORAGE_KEY = 'fortnite_pirate_tracker_v2';
+
+    // Application State
+    let state = {
+      chests: {
+        normal: 0,
+        rate15: 0,
+        rate20: 0
+      },
+      currentRate: 'normal',
+      soundEnabled: true,
+      history: []
+    };
+
+    // Action Stack for Undo feature (supports multiple levels of undo)
+    const undoStack = [];
+
+    // Web Audio Sound Engine (Synthesized Arcade Sound - no external assets required)
+    let audioCtx = null;
+
+    function initAudio() {
+      if (!audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (AudioContext) {
+          audioCtx = new AudioContext();
+        }
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    function playChestSound() {
+      if (!state.soundEnabled) return;
+      try {
+        initAudio();
+        if (!audioCtx) return;
+
+        const now = audioCtx.currentTime;
+        
+        // Oscillator 1: High coin metallic click
+        const osc1 = audioCtx.createOscillator();
+        const gain1 = audioCtx.createGain();
+        osc1.type = 'triangle';
+        osc1.frequency.setValueAtTime(587.33, now); // D5
+        osc1.frequency.exponentialRampToValueAtTime(880, now + 0.08); // A5
+        osc1.frequency.exponentialRampToValueAtTime(1174.66, now + 0.15); // D6
+
+        gain1.gain.setValueAtTime(0.18, now);
+        gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+
+        osc1.connect(gain1);
+        gain1.connect(audioCtx.destination);
+        osc1.start(now);
+        osc1.stop(now + 0.25);
+
+        // Oscillator 2: Chest thud / bass impact
+        const osc2 = audioCtx.createOscillator();
+        const gain2 = audioCtx.createGain();
+        osc2.type = 'sine';
+        osc2.frequency.setValueAtTime(160, now);
+        osc2.frequency.exponentialRampToValueAtTime(40, now + 0.18);
+
+        gain2.gain.setValueAtTime(0.2, now);
+        gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+
+        osc2.connect(gain2);
+        gain2.connect(audioCtx.destination);
+        osc2.start(now);
+        osc2.stop(now + 0.2);
+      } catch (e) {
+        console.warn('Audio play failed', e);
+      }
+    }
+
+    function playUndoSound() {
+      if (!state.soundEnabled) return;
+      try {
+        initAudio();
+        if (!audioCtx) return;
+
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(440, now);
+        osc.frequency.exponentialRampToValueAtTime(220, now + 0.15);
+
+        gain.gain.setValueAtTime(0.15, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.15);
+      } catch (e) {
+        console.warn('Audio play failed', e);
+      }
+    }
+
+    function playSaveSound() {
+      if (!state.soundEnabled) return;
+      try {
+        initAudio();
+        if (!audioCtx) return;
+
+        const now = audioCtx.currentTime;
+        const notes = [523.25, 659.25, 783.99, 1046.50]; // C E G C Fanfare
+        notes.forEach((freq, idx) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'square';
+          osc.frequency.setValueAtTime(freq, now + idx * 0.06);
+
+          gain.gain.setValueAtTime(0.08, now + idx * 0.06);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.06 + 0.18);
+
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now + idx * 0.06);
+          osc.stop(now + idx * 0.06 + 0.18);
+        });
+      } catch (e) {
+        console.warn('Audio play failed', e);
+      }
+    }
+
+    // Toggle Sound Settings
+    function toggleSound() {
+      state.soundEnabled = !state.soundEnabled;
+      const btn = document.getElementById('soundToggleBtn');
+      const icon = document.getElementById('soundIcon');
+      const txt = document.getElementById('soundText');
+      if (state.soundEnabled) {
+        btn.classList.add('active');
+        icon.textContent = '🔊';
+        txt.textContent = 'เปิดเสียงเกม';
+        showToast('เปิดเสียงเอฟเฟกต์แล้ว', '🔊');
+        initAudio();
+      } else {
+        btn.classList.remove('active');
+        icon.textContent = '🔇';
+        txt.textContent = 'ปิดเสียงเกม';
+        showToast('ปิดเสียงเอฟเฟกต์แล้ว', '🔇');
+      }
+      saveToStorage();
+    }
+
+    // Select Active Drop Rate
+    function selectRate(rateKey) {
+      state.currentRate = rateKey;
+      
+      // Update Tab Styles
+      document.querySelectorAll('.mode-tab').forEach(tab => {
+        tab.className = 'mode-tab';
+      });
+
+      if (rateKey === 'normal') {
+        document.getElementById('tab-normal').classList.add('active-normal');
+      } else if (rateKey === 'rate15') {
+        document.getElementById('tab-15').classList.add('active-15');
+      } else if (rateKey === 'rate20') {
+        document.getElementById('tab-20').classList.add('active-20');
+      }
+
+      // Highlight active tier card
+      document.querySelectorAll('.tier-card').forEach(c => c.classList.remove('tier-active'));
+      document.getElementById(`card-${rateKey}`).classList.add('tier-active');
+
+      recalculate();
+      saveToStorage();
+    }
+
+    // Handle Tapping Chest (+1 or Quick Buttons)
+    function handleChestClick(amount) {
+      initAudio();
+      const currentRate = state.currentRate;
+      state.chests[currentRate] = (state.chests[currentRate] || 0) + amount;
+
+      // Push to undo stack
+      undoStack.push({
+        rate: currentRate,
+        amount: amount
+      });
+      updateUndoButtonState();
+
+      // Trigger Visual Button FX
+      const btn = document.getElementById('giantBtn');
+      btn.classList.remove('ripple-fx');
+      void btn.offsetWidth; // Reflow
+      btn.classList.add('ripple-fx');
+
+      // Create floating loot particle
+      spawnFloatingLoot(amount);
+
+      // Play Sound
+      playChestSound();
+
+      // Recalculate & Save
+      recalculate();
+      saveToStorage();
+    }
+
+    // Undo Feature
+    function undoLastAction() {
+      if (undoStack.length === 0) return;
+      const lastAction = undoStack.pop();
+      if (lastAction && state.chests[lastAction.rate] !== undefined) {
+        state.chests[lastAction.rate] = Math.max(0, state.chests[lastAction.rate] - lastAction.amount);
+        playUndoSound();
+        showToast(`ยกเลิก ${lastAction.amount > 0 ? '+' : ''}${lastAction.amount} กล่องเรียบร้อย`, '↩️');
+        updateUndoButtonState();
+        recalculate();
+        saveToStorage();
+      }
+    }
+
+    function updateUndoButtonState() {
+      const undoBtn = document.getElementById('undoBtn');
+      if (undoStack.length > 0) {
+        undoBtn.disabled = false;
+      } else {
+        undoBtn.disabled = true;
+      }
+    }
+
+    // Spawn floating "+1" or "+10" loot badge
+    function spawnFloatingLoot(amount) {
+      const tapArea = document.querySelector('.tap-area');
+      const loot = document.createElement('div');
+      loot.className = 'floating-loot';
+      loot.textContent = `+${amount}`;
+      
+      // Random slight offset for lively game feel
+      const randomX = (Math.random() - 0.5) * 80;
+      loot.style.left = `calc(50% + ${randomX}px)`;
+      loot.style.top = '30px';
+
+      tapArea.appendChild(loot);
+
+      setTimeout(() => {
+        loot.remove();
+      }, 750);
+    }
+
+    // Manual Input Changes
+    function handleManualInputChange(rateKey) {
+      const input = document.getElementById(`input-${rateKey}`);
+      const val = Math.max(0, parseInt(input.value) || 0);
+      state.chests[rateKey] = val;
+      recalculate();
+      saveToStorage();
+    }
+
+    // Mathematical Calculation (Exact Bernoulli formula across multiple drop rates)
+    function recalculate() {
+      const n1 = Math.max(0, parseInt(state.chests.normal) || 0);
+      const n15 = Math.max(0, parseInt(state.chests.rate15) || 0);
+      const n20 = Math.max(0, parseInt(state.chests.rate20) || 0);
+
+      // Sync Inputs
+      document.getElementById('input-normal').value = n1;
+      document.getElementById('input-rate15').value = n15;
+      document.getElementById('input-rate20').value = n20;
+
+      const totalChests = n1 + n15 + n20;
+
+      // Drop probabilities for single chest
+      const p1 = 1 / RATES.normal;
+      const p15 = 1 / RATES.rate15;
+      const p20 = 1 / RATES.rate20;
+
+      // Probability of missing all chests:
+      // Using log space for numerical precision: ln(P_miss) = N1*ln(1-p1) + N1.5*ln(1-p1.5) + N2*ln(1-p2)
+      const lnMiss = (n1 * Math.log(1 - p1)) + (n15 * Math.log(1 - p15)) + (n20 * Math.log(1 - p20));
+      const pMiss = Math.exp(lnMiss);
+      const pWin = Math.max(0, Math.min(1, 1 - pMiss));
+      const pWinPercent = pWin * 100;
+
+      // Display Chance
+      let formattedChance;
+      if (totalChests === 0 || pWinPercent === 0) {
+        formattedChance = "0.0000%";
+      } else if (pWinPercent < 0.01) {
+        formattedChance = pWinPercent.toFixed(4) + "%";
+      } else if (pWinPercent < 1) {
+        formattedChance = pWinPercent.toFixed(4) + "%";
+      } else if (pWinPercent < 10) {
+        formattedChance = pWinPercent.toFixed(3) + "%";
+      } else {
+        formattedChance = pWinPercent.toFixed(2) + "%";
+      }
+
+      document.getElementById('chanceDisplay').innerText = formattedChance;
+      document.getElementById('progressFill').style.width = Math.min(pWinPercent, 100) + "%";
+
+      // Summary label
+      document.getElementById('probSummary').innerHTML = `
+        📦 รวมเปิดสะสม: <strong style="color:#fff; margin:0 4px;">${totalChests.toLocaleString()} กล่อง</strong>
+        (ปกติ: ${n1.toLocaleString()} | 1.5x: ${n15.toLocaleString()} | 2.0x: ${n20.toLocaleString()})
+      `;
+
+      // Milestones Calculation: Additional chests needed in CURRENT ACTIVE RATE to reach 50% and 90%
+      const currentRateKey = state.currentRate;
+      const pActive = 1 / RATES[currentRateKey];
+      const lnActiveMiss = Math.log(1 - pActive);
+
+      // Remaining target for 50%: target P_miss = 0.5
+      // Current lnMiss + deltaN * lnActiveMiss <= ln(0.5)
+      const targetLn50 = Math.log(0.5);
+      let needed50 = 0;
+      if (lnMiss > targetLn50) {
+        needed50 = Math.ceil((targetLn50 - lnMiss) / lnActiveMiss);
+      }
+
+      // Remaining target for 90%: target P_miss = 0.1
+      const targetLn90 = Math.log(0.1);
+      let needed90 = 0;
+      if (lnMiss > targetLn90) {
+        needed90 = Math.ceil((targetLn90 - lnMiss) / lnActiveMiss);
+      }
+
+      const activeRateName = currentRateKey === 'normal' ? 'เรตปกติ' : (currentRateKey === 'rate15' ? 'เรต 1.5x' : 'เรต 2.0x');
+
+      if (needed50 === 0) {
+        document.getElementById('target50Display').innerText = "บรรลุแล้ว! 🎉";
+        document.getElementById('target50Desc').innerText = "โอกาสเกิน 50% เรียบร้อย";
+      } else {
+        document.getElementById('target50Display').innerText = needed50.toLocaleString() + " กล่อง";
+        document.getElementById('target50Desc').innerText = `เปิดเพิ่มอีกใน${activeRateName}`;
+      }
+
+      if (needed90 === 0) {
+        document.getElementById('target90Display').innerText = "บรรลุแล้ว! 👑";
+        document.getElementById('target90Desc').innerText = "โอกาสเกิน 90% เรียบร้อย";
+      } else {
+        document.getElementById('target90Display').innerText = needed90.toLocaleString() + " กล่อง";
+        document.getElementById('target90Desc').innerText = `เปิดเพิ่มอีกใน${activeRateName}`;
+      }
+    }
+
+    // Save Current Session as a Match to History
+    function saveCurrentMatch() {
+      const n1 = state.chests.normal || 0;
+      const n15 = state.chests.rate15 || 0;
+      const n20 = state.chests.rate20 || 0;
+      const total = n1 + n15 + n20;
+
+      if (total === 0) {
+        showToast('ยังไม่มีการเปิดกล่องในรอบนี้', '⚠️');
+        return;
+      }
+
+      const newMatch = {
+        id: 'match_' + Date.now(),
+        date: new Date().toLocaleString('th-TH', { 
+          month: 'short', 
+          day: 'numeric', 
+          hour: '2-digit', 
+          minute: '2-digit' 
+        }),
+        normal: n1,
+        rate15: n15,
+        rate20: n20,
+        total: total
+      };
+
+      state.history.unshift(newMatch);
+      playSaveSound();
+      showToast(`บันทึกแมตช์ (${total} กล่อง) เรียบร้อย!`, '💾');
+      
+      renderHistory();
+      saveToStorage();
+    }
+
+    // Render History Items
+    function renderHistory() {
+      const listEl = document.getElementById('historyList');
+      if (!state.history || state.history.length === 0) {
+        listEl.innerHTML = `<div class="empty-history">ยังไม่มีประวัติการบันทึกแมตช์ กด "+1" แล้วคลิก "บันทึกแมตช์นี้" ได้เลย!</div>`;
+        return;
+      }
+
+      let html = '';
+      state.history.forEach((item, index) => {
+        html += `
+          <div class="history-item">
+            <div class="history-item-info">
+              <strong>แมตช์ #${state.history.length - index} — ${item.total.toLocaleString()} กล่อง</strong>
+              <span>📅 ${item.date}</span>
+            </div>
+            <div class="history-pills">
+              <span class="history-pill-val badge-normal">${item.normal}</span>
+              <span class="history-pill-val badge-15">${item.rate15}</span>
+              <span class="history-pill-val badge-20">${item.rate20}</span>
+            </div>
+            <button class="btn-del-item" onclick="deleteHistoryItem('${item.id}')" title="ลบรายการนี้">✕</button>
+          </div>
+        `;
+      });
+      listEl.innerHTML = html;
+    }
+
+    function deleteHistoryItem(id) {
+      state.history = state.history.filter(item => item.id !== id);
+      renderHistory();
+      saveToStorage();
+      showToast('ลบรายการแมตช์แล้ว', '🗑️');
+    }
+
+    function clearAllHistory() {
+      if (confirm('คุณต้องการล้างประวัติการเล่นทั้งหมดใช่หรือไม่?')) {
+        state.history = [];
+        renderHistory();
+        saveToStorage();
+        showToast('ล้างประวัติเรียบร้อย', '🗑️');
+      }
+    }
+
+    // Reset Current Session (leaves history intact)
+    function resetCurrentSession() {
+      if (confirm('ต้องการรีเซ็ตจำนวนกล่องรอบปัจจุบันเป็น 0 ใช่หรือไม่?')) {
+        state.chests.normal = 0;
+        state.chests.rate15 = 0;
+        state.chests.rate20 = 0;
+        undoStack.length = 0;
+        updateUndoButtonState();
+        recalculate();
+        saveToStorage();
+        showToast('รีเซ็ตรอบปัจจุบันเป็น 0 แล้ว', '🔄');
+      }
+    }
+
+    // Toast Notification helper
+    let toastTimeout = null;
+    function showToast(msg, icon = '✨') {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastMsg').innerText = msg;
+      document.getElementById('toastIcon').innerText = icon;
+      toast.classList.add('show');
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2200);
+    }
+
+    // Storage Management
+    function saveToStorage() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (e) {
+        console.warn('Storage save failed', e);
+      }
+    }
+
+    function loadFromStorage() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object') {
+            state.chests = parsed.chests || { normal: 0, rate15: 0, rate20: 0 };
+            state.currentRate = parsed.currentRate || 'normal';
+            state.soundEnabled = parsed.soundEnabled !== undefined ? parsed.soundEnabled : true;
+            state.history = Array.isArray(parsed.history) ? parsed.history : [];
+          }
+        }
+      } catch (e) {
+        console.warn('Storage load failed', e);
+      }
+    }
+
+    // Keyboard Shortcuts (Spacebar to tap +1)
+    window.addEventListener('keydown', (e) => {
+      // Don't trigger if user is typing inside an input
+      if (e.target.tagName === 'INPUT') return;
+
+      if (e.code === 'Space') {
+        e.preventDefault();
+        const giantBtn = document.getElementById('giantBtn');
+        giantBtn.classList.add('pressed');
+        handleChestClick(1);
+        setTimeout(() => giantBtn.classList.remove('pressed'), 120);
+      } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') {
+        e.preventDefault();
+        undoLastAction();
+      }
+    });
+
+    // Initialize on Page Load
+    function init() {
+      loadFromStorage();
+      
+      // Setup sound toggle state
+      const btn = document.getElementById('soundToggleBtn');
+      const icon = document.getElementById('soundIcon');
+      const txt = document.getElementById('soundText');
+      if (state.soundEnabled) {
+        btn.classList.add('active');
+        icon.textContent = '🔊';
+        txt.textContent = 'เปิดเสียงเกม';
+      } else {
+        btn.classList.remove('active');
+        icon.textContent = '🔇';
+        txt.textContent = 'ปิดเสียงเกม';
+      }
+
+      selectRate(state.currentRate);
+      renderHistory();
+      recalculate();
+    }
+
+    init();
+  </script>
+</body>
+</html>
