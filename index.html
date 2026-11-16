@@ -60,7 +60,7 @@
 
     .app-container {
       width: 100%;
-      max-width: 680px;
+      max-width: 720px;
       display: flex;
       flex-direction: column;
       gap: 20px;
@@ -140,6 +140,7 @@
       justify-content: center;
       gap: 10px;
       margin-top: 14px;
+      flex-wrap: wrap;
     }
 
     .btn-toggle-sound {
@@ -230,6 +231,7 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
+      flex-wrap: wrap;
     }
 
     /* Stylized Battle-pass style Progress Bar */
@@ -330,7 +332,7 @@
       align-items: center;
       margin-bottom: 16px;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 10px;
     }
 
     .section-title {
@@ -483,18 +485,9 @@
     }
 
     @keyframes lootFloat {
-      0% {
-        opacity: 0;
-        transform: translateY(0) scale(0.6);
-      }
-      30% {
-        opacity: 1;
-        transform: translateY(-20px) scale(1.2);
-      }
-      100% {
-        opacity: 0;
-        transform: translateY(-65px) scale(0.9);
-      }
+      0% { opacity: 0; transform: translateY(0) scale(0.6); }
+      30% { opacity: 1; transform: translateY(-20px) scale(1.2); }
+      100% { opacity: 0; transform: translateY(-65px) scale(0.9); }
     }
 
     /* Quick Action Buttons and Undo Row */
@@ -629,6 +622,142 @@
       border-color: var(--gold-primary);
     }
 
+    /* ========================================================
+       NEW FEATURE: Selected Matches Real-Time Summary Card
+       ======================================================== */
+    .selected-summary-card {
+      background: linear-gradient(135deg, #10213b 0%, #15294a 100%);
+      border: 2px solid var(--cyan-accent);
+      border-radius: 18px;
+      padding: 18px 20px;
+      box-shadow: 0 8px 24px rgba(0, 240, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      position: relative;
+      margin-bottom: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .summary-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .summary-title-badge {
+      font-family: var(--font-game);
+      font-size: 1.05rem;
+      color: var(--cyan-accent);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      letter-spacing: 0.5px;
+    }
+
+    .summary-count-tag {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #fff;
+      background: rgba(0, 240, 255, 0.15);
+      border: 1px solid var(--cyan-dark);
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+
+    .summary-calc-body {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .summary-hero-prob {
+      background: #08111e;
+      border: 1px solid var(--border-dark);
+      border-radius: 14px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .summary-prob-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .summary-prob-val {
+      font-family: var(--font-game);
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      line-height: 1.1;
+      color: var(--gold-light);
+      text-shadow: 0 0 15px rgba(251, 191, 36, 0.4);
+      margin: 4px 0;
+    }
+
+    .summary-prob-sub {
+      font-size: 0.75rem;
+      color: var(--cyan-accent);
+      font-weight: 600;
+    }
+
+    .summary-stats-col {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .summary-stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+    }
+
+    .summary-stat-row span {
+      color: var(--text-muted);
+    }
+
+    .summary-stat-row strong {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .summary-rate-mode-select {
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+    }
+
+    .summary-rate-mode-select select {
+      background: #09111e;
+      border: 1px solid var(--border-dark);
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 8px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .summary-rate-mode-select select:focus {
+      border-color: var(--cyan-accent);
+    }
+
+    .summary-empty-hint {
+      text-align: center;
+      padding: 16px;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+    }
+
     /* Match History & Management */
     .history-section {
       background: var(--bg-surface);
@@ -638,7 +767,48 @@
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
     }
 
-    .history-controls {
+    .history-actions-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .select-controls-group {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .btn-select-action {
+      background: #0d192c;
+      border: 1px solid var(--border-dark);
+      color: var(--text-muted);
+      font-weight: 700;
+      font-size: 0.78rem;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-select-action:hover {
+      background: #142745;
+      color: #fff;
+      border-color: var(--cyan-accent);
+    }
+
+    .btn-select-action.danger:hover {
+      border-color: var(--crimson-accent);
+      color: #fca5a5;
+    }
+
+    .history-main-buttons {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
@@ -690,8 +860,7 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
-      margin-top: 14px;
-      max-height: 260px;
+      max-height: 320px;
       overflow-y: auto;
       padding-right: 4px;
     }
@@ -705,15 +874,75 @@
       border-radius: 999px;
     }
 
+    /* History Item with Custom Checkbox */
     .history-item {
       background: #09111e;
       border: 1px solid var(--border-dark);
       border-radius: 12px;
       padding: 10px 14px;
       display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      position: relative;
+    }
+
+    .history-item:hover {
+      background: #0f1c32;
+      border-color: rgba(0, 240, 255, 0.4);
+    }
+
+    .history-item.is-selected {
+      background: linear-gradient(90deg, rgba(2, 132, 199, 0.15) 0%, rgba(15, 28, 50, 0.8) 100%);
+      border-color: var(--cyan-accent);
+      box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+    }
+
+    /* Custom Checkbox Design */
+    .item-checkbox {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      border: 2px solid var(--border-dark);
+      background: #060c16;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+
+    .history-item:hover .item-checkbox {
+      border-color: var(--cyan-accent);
+    }
+
+    .history-item.is-selected .item-checkbox {
+      background: var(--cyan-accent);
+      border-color: var(--cyan-accent);
+      box-shadow: 0 0 8px var(--cyan-glow);
+    }
+
+    .item-checkbox::after {
+      content: '✓';
+      font-size: 0.85rem;
+      font-weight: 900;
+      color: #070d18;
+      display: none;
+    }
+
+    .history-item.is-selected .item-checkbox::after {
+      display: block;
+    }
+
+    .history-item-content {
+      flex: 1;
+      display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
+      flex-wrap: wrap;
     }
 
     .history-item-info strong {
@@ -746,13 +975,15 @@
       border: none;
       color: var(--text-dim);
       cursor: pointer;
-      padding: 4px;
+      padding: 6px;
       font-size: 1rem;
       transition: color 0.2s;
+      border-radius: 6px;
     }
 
     .btn-del-item:hover {
       color: var(--crimson-accent);
+      background: rgba(239, 68, 68, 0.1);
     }
 
     .empty-history {
@@ -823,7 +1054,7 @@
       transform: translateX(-50%) translateY(0);
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 580px) {
       body {
         padding: 16px 10px 48px 10px;
       }
@@ -835,6 +1066,13 @@
       }
       .milestones-grid {
         grid-template-columns: 1fr;
+      }
+      .summary-calc-body {
+        grid-template-columns: 1fr;
+      }
+      .history-actions-bar {
+        flex-direction: column;
+        align-items: flex-start;
       }
     }
   </style>
@@ -976,16 +1214,52 @@
         <div class="section-title">
           <span>📜 ประวัติการเล่น & บันทึกแมตช์</span>
         </div>
-        <div class="history-controls">
+        <div class="history-main-buttons">
           <button class="btn-action-primary" onclick="saveCurrentMatch()">
             <span>💾 บันทึกแมตช์นี้</span>
           </button>
           <button class="btn-action-ghost" onclick="clearAllHistory()">
-            <span>🗑️ ล้างประวัติ</span>
+            <span>🗑️ ล้างทั้งหมด</span>
           </button>
         </div>
       </div>
 
+      <!-- Real-Time Selected Matches Summary Box -->
+      <div class="selected-summary-card" id="selectedSummaryBox">
+        <div class="summary-card-header">
+          <div class="summary-title-badge">
+            <span>🎯 สรุปผลแมตช์ที่เลือก (Selected Analysis)</span>
+          </div>
+          <div class="summary-count-tag" id="selectedCountTag">เลือก 0 แมตช์</div>
+        </div>
+
+        <div id="summaryContentArea">
+          <!-- Populated by updateSelectedSummary() -->
+        </div>
+      </div>
+
+      <!-- Select All / Deselect All Toolbar -->
+      <div class="history-actions-bar">
+        <div class="select-controls-group">
+          <button class="btn-select-action" onclick="selectAllMatches()">
+            <span>☑️</span>
+            <span>เลือกทั้งหมด</span>
+          </button>
+          <button class="btn-select-action" onclick="deselectAllMatches()">
+            <span>⬜</span>
+            <span>ล้างการเลือก</span>
+          </button>
+          <button class="btn-select-action danger" onclick="deleteSelectedMatches()">
+            <span>🗑️</span>
+            <span>ลบเฉพาะที่เลือก</span>
+          </button>
+        </div>
+        <span style="font-size: 0.75rem; color: var(--text-dim);">
+          คลิกที่การ์ดเพื่อเลือกหรือยกเลิกแมตช์
+        </span>
+      </div>
+
+      <!-- Match History List -->
       <div class="history-list" id="historyList">
         <div class="empty-history">ยังไม่มีประวัติการบันทึกแมตช์ กด "+1" แล้วคลิก "บันทึกแมตช์นี้" ได้เลย!</div>
       </div>
@@ -995,16 +1269,22 @@
     <details class="math-info-card">
       <summary>📐 หลักการคำนวณความน่าจะเป็นรวมแบบผสม (Mathematical Formula)</summary>
       <p>
-        เมื่อเปิดกล่องข้ามหลายช่วงเวลาที่มีเรตต่างกัน โอกาสรวมที่จะได้ Pirate Token อย่างน้อย 1 ชิ้น คำนวณจากสูตร:
+        เมื่อเปิดกล่องข้ามหลายช่วงเวลาที่มีเรตต่างกัน โอกาสรวมที่จะได้ Pirate Token อย่างน้อย 1 ชิ้น คำนวณจากสูตร Bernoulli:
       </p>
       <div class="formula-box">
         P(สะสม) = 1 - [ (1 - p₁)^(N₁) × (1 - p₁.₅)^(N₁.₅) × (1 - p₂)^(N₂) ]
       </div>
       <p>
+        หรือหากคำนวณตามเรตดรอปเดี่ยว (1 ใน D) ด้วยจำนวนกล่องรวม N กล่อง:
+      </p>
+      <div class="formula-box">
+        P(สะสม) = 1 - (1 - 1/D)^N
+      </div>
+      <p>
         • <strong>เวลาปกติ (1.0x):</strong> p₁ = 1 / 137,500<br>
         • <strong>Treasure Hour 1.5x:</strong> p₁.₅ = 1 / 91,667 (หรือ 1.5 / 137,500)<br>
         • <strong>Treasure Hour 2.0x:</strong> p₂ = 1 / 68,750 (หรือ 2.0 / 137,500)<br>
-        ระบบจะจำลองการเปิดจริงทุกกล่อง และบันทึกข้อมูลคงไว้ใน LocalStorage อัตโนมัติ ป้องกันข้อมูลหายเมื่อรีเฟรช
+        ระบบจะคำนวณแบบ Real-time ทันทีเมื่อคลิกเลือกแมตช์ในรายการประวัติ
       </p>
     </details>
 
@@ -1038,10 +1318,16 @@
       history: []
     };
 
-    // Action Stack for Undo feature (supports multiple levels of undo)
+    // Set of selected match IDs for multi-match analysis
+    const selectedMatchIds = new Set();
+    
+    // Evaluation mode for selected summary ('exact' or specific rate like 'normal', 'rate15', 'rate20')
+    let selectedRateCalcMode = 'exact';
+
+    // Action Stack for Undo feature
     const undoStack = [];
 
-    // Web Audio Sound Engine (Synthesized Arcade Sound - no external assets required)
+    // Web Audio Sound Engine
     let audioCtx = null;
 
     function initAudio() {
@@ -1063,8 +1349,6 @@
         if (!audioCtx) return;
 
         const now = audioCtx.currentTime;
-        
-        // Oscillator 1: High coin metallic click
         const osc1 = audioCtx.createOscillator();
         const gain1 = audioCtx.createGain();
         osc1.type = 'triangle';
@@ -1080,7 +1364,6 @@
         osc1.start(now);
         osc1.stop(now + 0.25);
 
-        // Oscillator 2: Chest thud / bass impact
         const osc2 = audioCtx.createOscillator();
         const gain2 = audioCtx.createGain();
         osc2.type = 'sine';
@@ -1131,7 +1414,7 @@
         if (!audioCtx) return;
 
         const now = audioCtx.currentTime;
-        const notes = [523.25, 659.25, 783.99, 1046.50]; // C E G C Fanfare
+        const notes = [523.25, 659.25, 783.99, 1046.50];
         notes.forEach((freq, idx) => {
           const osc = audioCtx.createOscillator();
           const gain = audioCtx.createGain();
@@ -1176,7 +1459,6 @@
     function selectRate(rateKey) {
       state.currentRate = rateKey;
       
-      // Update Tab Styles
       document.querySelectorAll('.mode-tab').forEach(tab => {
         tab.className = 'mode-tab';
       });
@@ -1189,7 +1471,6 @@
         document.getElementById('tab-20').classList.add('active-20');
       }
 
-      // Highlight active tier card
       document.querySelectorAll('.tier-card').forEach(c => c.classList.remove('tier-active'));
       document.getElementById(`card-${rateKey}`).classList.add('tier-active');
 
@@ -1203,26 +1484,20 @@
       const currentRate = state.currentRate;
       state.chests[currentRate] = (state.chests[currentRate] || 0) + amount;
 
-      // Push to undo stack
       undoStack.push({
         rate: currentRate,
         amount: amount
       });
       updateUndoButtonState();
 
-      // Trigger Visual Button FX
       const btn = document.getElementById('giantBtn');
       btn.classList.remove('ripple-fx');
-      void btn.offsetWidth; // Reflow
+      void btn.offsetWidth;
       btn.classList.add('ripple-fx');
 
-      // Create floating loot particle
       spawnFloatingLoot(amount);
-
-      // Play Sound
       playChestSound();
 
-      // Recalculate & Save
       recalculate();
       saveToStorage();
     }
@@ -1250,14 +1525,13 @@
       }
     }
 
-    // Spawn floating "+1" or "+10" loot badge
+    // Spawn floating "+1" loot particle
     function spawnFloatingLoot(amount) {
       const tapArea = document.querySelector('.tap-area');
       const loot = document.createElement('div');
       loot.className = 'floating-loot';
       loot.textContent = `+${amount}`;
       
-      // Random slight offset for lively game feel
       const randomX = (Math.random() - 0.5) * 80;
       loot.style.left = `calc(50% + ${randomX}px)`;
       loot.style.top = '30px';
@@ -1278,68 +1552,57 @@
       saveToStorage();
     }
 
-    // Mathematical Calculation (Exact Bernoulli formula across multiple drop rates)
+    // Format Chance Helper
+    function formatProbability(pWinPercent, totalChests) {
+      if (totalChests === 0 || pWinPercent <= 0) return "0.0000%";
+      if (pWinPercent < 0.01) return pWinPercent.toFixed(4) + "%";
+      if (pWinPercent < 1) return pWinPercent.toFixed(4) + "%";
+      if (pWinPercent < 10) return pWinPercent.toFixed(3) + "%";
+      return pWinPercent.toFixed(2) + "%";
+    }
+
+    // Mathematical Calculation for current session
     function recalculate() {
       const n1 = Math.max(0, parseInt(state.chests.normal) || 0);
       const n15 = Math.max(0, parseInt(state.chests.rate15) || 0);
       const n20 = Math.max(0, parseInt(state.chests.rate20) || 0);
 
-      // Sync Inputs
       document.getElementById('input-normal').value = n1;
       document.getElementById('input-rate15').value = n15;
       document.getElementById('input-rate20').value = n20;
 
       const totalChests = n1 + n15 + n20;
 
-      // Drop probabilities for single chest
       const p1 = 1 / RATES.normal;
       const p15 = 1 / RATES.rate15;
       const p20 = 1 / RATES.rate20;
 
-      // Probability of missing all chests:
-      // Using log space for numerical precision: ln(P_miss) = N1*ln(1-p1) + N1.5*ln(1-p1.5) + N2*ln(1-p2)
       const lnMiss = (n1 * Math.log(1 - p1)) + (n15 * Math.log(1 - p15)) + (n20 * Math.log(1 - p20));
       const pMiss = Math.exp(lnMiss);
       const pWin = Math.max(0, Math.min(1, 1 - pMiss));
       const pWinPercent = pWin * 100;
 
-      // Display Chance
-      let formattedChance;
-      if (totalChests === 0 || pWinPercent === 0) {
-        formattedChance = "0.0000%";
-      } else if (pWinPercent < 0.01) {
-        formattedChance = pWinPercent.toFixed(4) + "%";
-      } else if (pWinPercent < 1) {
-        formattedChance = pWinPercent.toFixed(4) + "%";
-      } else if (pWinPercent < 10) {
-        formattedChance = pWinPercent.toFixed(3) + "%";
-      } else {
-        formattedChance = pWinPercent.toFixed(2) + "%";
-      }
+      const formattedChance = formatProbability(pWinPercent, totalChests);
 
       document.getElementById('chanceDisplay').innerText = formattedChance;
       document.getElementById('progressFill').style.width = Math.min(pWinPercent, 100) + "%";
 
-      // Summary label
       document.getElementById('probSummary').innerHTML = `
-        📦 รวมเปิดสะสม: <strong style="color:#fff; margin:0 4px;">${totalChests.toLocaleString()} กล่อง</strong>
+        📦 รวมเปิดรอบนี้: <strong style="color:#fff; margin:0 4px;">${totalChests.toLocaleString()} กล่อง</strong>
         (ปกติ: ${n1.toLocaleString()} | 1.5x: ${n15.toLocaleString()} | 2.0x: ${n20.toLocaleString()})
       `;
 
-      // Milestones Calculation: Additional chests needed in CURRENT ACTIVE RATE to reach 50% and 90%
+      // Milestones
       const currentRateKey = state.currentRate;
       const pActive = 1 / RATES[currentRateKey];
       const lnActiveMiss = Math.log(1 - pActive);
 
-      // Remaining target for 50%: target P_miss = 0.5
-      // Current lnMiss + deltaN * lnActiveMiss <= ln(0.5)
       const targetLn50 = Math.log(0.5);
       let needed50 = 0;
       if (lnMiss > targetLn50) {
         needed50 = Math.ceil((targetLn50 - lnMiss) / lnActiveMiss);
       }
 
-      // Remaining target for 90%: target P_miss = 0.1
       const targetLn90 = Math.log(0.1);
       let needed90 = 0;
       if (lnMiss > targetLn90) {
@@ -1365,6 +1628,160 @@
       }
     }
 
+    // ========================================================
+    // NEW FEATURE: Multi-Match Selection & Cumulative Summary
+    // ========================================================
+    function toggleMatchSelection(id, event) {
+      if (event && event.target.closest('.btn-del-item')) {
+        return; // Don't toggle selection if delete button clicked
+      }
+
+      if (selectedMatchIds.has(id)) {
+        selectedMatchIds.delete(id);
+      } else {
+        selectedMatchIds.add(id);
+      }
+
+      renderHistory();
+      updateSelectedSummary();
+    }
+
+    function selectAllMatches() {
+      if (!state.history || state.history.length === 0) {
+        showToast('ไม่มีแมตช์ในประวัติให้เลือก', '⚠️');
+        return;
+      }
+      state.history.forEach(m => selectedMatchIds.add(m.id));
+      renderHistory();
+      updateSelectedSummary();
+      showToast(`เลือกทั้งหมด (${state.history.length} แมตช์) เรียบร้อย`, '☑️');
+    }
+
+    function deselectAllMatches() {
+      selectedMatchIds.clear();
+      renderHistory();
+      updateSelectedSummary();
+      showToast('ล้างการเลือกทั้งหมดแล้ว', '⬜');
+    }
+
+    function deleteSelectedMatches() {
+      if (selectedMatchIds.size === 0) {
+        showToast('โปรดติ๊กเลือกแมตช์ที่ต้องการลบก่อน', '⚠️');
+        return;
+      }
+
+      const count = selectedMatchIds.size;
+      if (confirm(`คุณต้องการลบ ${count} แมตช์ที่เลือกไว้ใช่หรือไม่?`)) {
+        state.history = state.history.filter(m => !selectedMatchIds.has(m.id));
+        selectedMatchIds.clear();
+        renderHistory();
+        updateSelectedSummary();
+        saveToStorage();
+        showToast(`ลบ ${count} แมตช์เรียบร้อยแล้ว`, '🗑️');
+      }
+    }
+
+    function handleRateModeChange(mode) {
+      selectedRateCalcMode = mode;
+      updateSelectedSummary();
+    }
+
+    // Real-Time Calculation of Selected Matches
+    function updateSelectedSummary() {
+      const countTag = document.getElementById('selectedCountTag');
+      const contentArea = document.getElementById('summaryContentArea');
+
+      const selectedMatches = state.history.filter(m => selectedMatchIds.has(m.id));
+      const count = selectedMatches.length;
+      countTag.textContent = `เลือก ${count} จาก ${state.history.length} แมตช์`;
+
+      if (count === 0) {
+        contentArea.innerHTML = `
+          <div class="summary-empty-hint">
+            💡 ติ๊ก Checkbox หน้าแมตช์ด้านล่างเพื่อเลือกดูสถิติและโอกาสสะสมรวมของกลุ่มแมตช์ที่คุณต้องการ
+          </div>
+        `;
+        return;
+      }
+
+      // Sum up chests from selected matches
+      let totalN1 = 0;
+      let totalN15 = 0;
+      let totalN20 = 0;
+
+      selectedMatches.forEach(m => {
+        totalN1 += (m.normal || 0);
+        totalN15 += (m.rate15 || 0);
+        totalN20 += (m.rate20 || 0);
+      });
+
+      const totalChests = totalN1 + totalN15 + totalN20;
+
+      // Probability Calculation
+      let winProb = 0;
+      let formulaDescription = '';
+
+      if (selectedRateCalcMode === 'exact') {
+        // Multi-rate exact Bernoulli formula
+        const p1 = 1 / RATES.normal;
+        const p15 = 1 / RATES.rate15;
+        const p20 = 1 / RATES.rate20;
+        const lnMiss = (totalN1 * Math.log(1 - p1)) + (totalN15 * Math.log(1 - p15)) + (totalN20 * Math.log(1 - p20));
+        winProb = Math.max(0, Math.min(1, 1 - Math.exp(lnMiss)));
+        formulaDescription = 'คำนวณตามเรตจริงของแต่ละกล่อง (Multi-Rate Exact)';
+      } else {
+        // Single rate formula: 1 - (1 - 1/D)^N
+        const denominator = RATES[selectedRateCalcMode];
+        const singleDrop = 1 / denominator;
+        const lnMiss = totalChests * Math.log(1 - singleDrop);
+        winProb = Math.max(0, Math.min(1, 1 - Math.exp(lnMiss)));
+        const rateLabel = selectedRateCalcMode === 'normal' ? 'เรตปกติ 1:137,500' : (selectedRateCalcMode === 'rate15' ? 'เรต 1.5x (1:91,667)' : 'เรต 2.0x (1:68,750)');
+        formulaDescription = `สูตร 1 - (1 - 1/D)^N คิดกล่องทั้งหมดที่ ${rateLabel}`;
+      }
+
+      const probPercent = winProb * 100;
+      const formattedProb = formatProbability(probPercent, totalChests);
+
+      contentArea.innerHTML = `
+        <div class="summary-calc-body">
+          <div class="summary-hero-prob">
+            <div class="summary-prob-label">โอกาสสะสมรวม (Cumulative Chance)</div>
+            <div class="summary-prob-val">${formattedProb}</div>
+            <div class="summary-prob-sub">${formulaDescription}</div>
+          </div>
+
+          <div class="summary-stats-col">
+            <div class="summary-stat-row">
+              <span>📦 รวมกล่องที่เลือก:</span>
+              <strong>${totalChests.toLocaleString()} กล่อง</strong>
+            </div>
+            <div class="summary-stat-row">
+              <span>🏴‍☠️ ปกติ (1.0x):</span>
+              <strong>${totalN1.toLocaleString()} กล่อง</strong>
+            </div>
+            <div class="summary-stat-row">
+              <span>⚡ Treasure 1.5x:</span>
+              <strong>${totalN15.toLocaleString()} กล่อง</strong>
+            </div>
+            <div class="summary-stat-row">
+              <span>🔥 Treasure 2.0x:</span>
+              <strong>${totalN20.toLocaleString()} กล่อง</strong>
+            </div>
+
+            <div class="summary-rate-mode-select">
+              <label for="rateModeSelect">โหมดสูตร:</label>
+              <select id="rateModeSelect" onchange="handleRateModeChange(this.value)">
+                <option value="exact" ${selectedRateCalcMode === 'exact' ? 'selected' : ''}>🎯 เรตจริงตามแมตช์ (Multi-Rate Exact)</option>
+                <option value="normal" ${selectedRateCalcMode === 'normal' ? 'selected' : ''}>🏴‍☠️ คิดทุกกล่องเป็นเรตปกติ (1:137,500)</option>
+                <option value="rate15" ${selectedRateCalcMode === 'rate15' ? 'selected' : ''}>⚡ คิดทุกกล่องเป็นช่วง 1.5x (1:91,667)</option>
+                <option value="rate20" ${selectedRateCalcMode === 'rate20' ? 'selected' : ''}>🔥 คิดทุกกล่องเป็นช่วง 2.0x (1:68,750)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
     // Save Current Session as a Match to History
     function saveCurrentMatch() {
       const n1 = state.chests.normal || 0;
@@ -1377,8 +1794,9 @@
         return;
       }
 
+      const matchId = 'match_' + Date.now();
       const newMatch = {
-        id: 'match_' + Date.now(),
+        id: matchId,
         date: new Date().toLocaleString('th-TH', { 
           month: 'short', 
           day: 'numeric', 
@@ -1392,14 +1810,18 @@
       };
 
       state.history.unshift(newMatch);
+      // Auto-select the newly added match
+      selectedMatchIds.add(matchId);
+
       playSaveSound();
       showToast(`บันทึกแมตช์ (${total} กล่อง) เรียบร้อย!`, '💾');
       
       renderHistory();
+      updateSelectedSummary();
       saveToStorage();
     }
 
-    // Render History Items
+    // Render History Items with Checkboxes
     function renderHistory() {
       const listEl = document.getElementById('historyList');
       if (!state.history || state.history.length === 0) {
@@ -1409,18 +1831,24 @@
 
       let html = '';
       state.history.forEach((item, index) => {
+        const isSelected = selectedMatchIds.has(item.id);
+        const selectedClass = isSelected ? 'is-selected' : '';
+
         html += `
-          <div class="history-item">
-            <div class="history-item-info">
-              <strong>แมตช์ #${state.history.length - index} — ${item.total.toLocaleString()} กล่อง</strong>
-              <span>📅 ${item.date}</span>
+          <div class="history-item ${selectedClass}" onclick="toggleMatchSelection('${item.id}', event)">
+            <div class="item-checkbox" title="${isSelected ? 'ยกเลิกการเลือก' : 'เลือกแมตช์นี้'}"></div>
+            <div class="history-item-content">
+              <div class="history-item-info">
+                <strong>แมตช์ #${state.history.length - index} — ${item.total.toLocaleString()} กล่อง</strong>
+                <span>📅 ${item.date}</span>
+              </div>
+              <div class="history-pills">
+                <span class="history-pill-val badge-normal" title="ปกติ">${item.normal}</span>
+                <span class="history-pill-val badge-15" title="1.5x">${item.rate15}</span>
+                <span class="history-pill-val badge-20" title="2.0x">${item.rate20}</span>
+              </div>
             </div>
-            <div class="history-pills">
-              <span class="history-pill-val badge-normal">${item.normal}</span>
-              <span class="history-pill-val badge-15">${item.rate15}</span>
-              <span class="history-pill-val badge-20">${item.rate20}</span>
-            </div>
-            <button class="btn-del-item" onclick="deleteHistoryItem('${item.id}')" title="ลบรายการนี้">✕</button>
+            <button class="btn-del-item" onclick="deleteHistoryItem('${item.id}')" title="ลบแมตช์นี้">✕</button>
           </div>
         `;
       });
@@ -1429,7 +1857,9 @@
 
     function deleteHistoryItem(id) {
       state.history = state.history.filter(item => item.id !== id);
+      selectedMatchIds.delete(id);
       renderHistory();
+      updateSelectedSummary();
       saveToStorage();
       showToast('ลบรายการแมตช์แล้ว', '🗑️');
     }
@@ -1437,7 +1867,9 @@
     function clearAllHistory() {
       if (confirm('คุณต้องการล้างประวัติการเล่นทั้งหมดใช่หรือไม่?')) {
         state.history = [];
+        selectedMatchIds.clear();
         renderHistory();
+        updateSelectedSummary();
         saveToStorage();
         showToast('ล้างประวัติเรียบร้อย', '🗑️');
       }
@@ -1498,8 +1930,7 @@
 
     // Keyboard Shortcuts (Spacebar to tap +1)
     window.addEventListener('keydown', (e) => {
-      // Don't trigger if user is typing inside an input
-      if (e.target.tagName === 'INPUT') return;
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
 
       if (e.code === 'Space') {
         e.preventDefault();
@@ -1517,7 +1948,6 @@
     function init() {
       loadFromStorage();
       
-      // Setup sound toggle state
       const btn = document.getElementById('soundToggleBtn');
       const icon = document.getElementById('soundIcon');
       const txt = document.getElementById('soundText');
@@ -1531,8 +1961,14 @@
         txt.textContent = 'ปิดเสียงเกม';
       }
 
+      // Select all matches by default if any exist
+      if (state.history && state.history.length > 0) {
+        state.history.forEach(m => selectedMatchIds.add(m.id));
+      }
+
       selectRate(state.currentRate);
       renderHistory();
+      updateSelectedSummary();
       recalculate();
     }
 
